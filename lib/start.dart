@@ -39,20 +39,29 @@ class _StartPageState extends State<StartPage> {
               itemBuilder: (context, index) {
                 final player = widget.players[index];
                 return ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {}, //Maybe allow for name editing in the future
                   child: Text(player.name),
                 );
               },
             ),
           ),
         
-          ElevatedButton(
-            onPressed: _addPlayer,
-            child: const Text('New Player'),
-          ),
+          //Button to add up to eight players. Button disapears when eight players are added.
+          if (widget.players.length < 8)
+            ElevatedButton(
+              onPressed: _addPlayer,
+              child: const Text('New Player'),
+            ),
+          
+          //Button to start the game.
+          if (widget.players.length > 1)
+            ElevatedButton(
+              onPressed: () {},
+              child: const Text('Start'),
+            ),
+          
         ]
       )
-      
     );
   }
 }
