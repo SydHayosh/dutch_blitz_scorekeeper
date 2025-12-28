@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'start.dart';
+import 'player.dart';
 
 void main() {
   runApp(const MainApp());
@@ -26,13 +27,27 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   int _index = 0;
-  List<Widget> pages = [StartPage()];
+  //List<Widget> pages = [StartPage(onSave: _newPlayer,)];
+  
+  final List<Player> _players = [];
 
-  void _newPlayer(){
+  void _select(int i) => setState(() => _index = i);
 
+  void _newPlayer(Player p){
+    setState(() {
+      _players.add(p);
+    });
   }
+
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      //starting screen where the user adds players
+      StartPage(
+        players: _players,
+        onSave: _newPlayer,
+      ),
+    ];
     return Scaffold(
       body: IndexedStack(index: _index, children: pages)
     );
