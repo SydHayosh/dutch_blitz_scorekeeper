@@ -18,14 +18,44 @@ class StartPage extends StatefulWidget {
 
 
 class _StartPageState extends State<StartPage> {
-
   void _addPlayer() {
-    print('new player pressed');
+    final TextEditingController _controller = TextEditingController();
 
-    //final player = Player(name: 'player');
-    widget.onSave(Player(name: 'player'));
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          //title: const Text('Add Player'),
+          content: TextField(
+            controller: _controller,
+            decoration: const InputDecoration(
+              labelText: 'Player name ',
+              //hintText: 'Player name',
+            ),
+          ),
 
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                final name = _controller.text.trim();
+                if (name.isNotEmpty) {
+                  widget.onSave(Player(name: name));
+                }
+                Navigator.pop(context);
+              },
+              child: const Text('Add')
+            ),
+          ]
+        );
+      },
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
