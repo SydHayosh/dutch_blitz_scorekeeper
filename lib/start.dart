@@ -60,20 +60,55 @@ class _StartPageState extends State<StartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        spacing: 20,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             //Displays players
-            child: ListView.builder(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 20,
+                  runSpacing: 20,
+                  children: widget.players.map((player) {
+                    return SizedBox(
+                      width: 220,
+                      height: 48,
+                      child: ElevatedButton(
+                        onPressed:() {},
+                        child: Text(player.name),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ),
+            /*child: GridView.builder(
               itemCount: widget.players.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                mainAxisSpacing: 20,
+                crossAxisSpacing: 20,
+                childAspectRatio: 5,
+              ),
               itemBuilder: (context, index) {
                 final player = widget.players[index];
-                return ElevatedButton(
-                  onPressed: () {}, //Maybe allow for name editing in the future
-                  child: Text(player.name),
+                return Center(
+                  child: SizedBox(
+                    width: 300,
+                    height: 48,
+                    child: ElevatedButton(
+                      onPressed: () {}, //TODO Maybe allow for name editing in the future
+                      child: Text(player.name),
+                    ),
+                  )
                 );
+                
+                
               },
-            ),
+            ),*/
           ),
         
           //Button to add up to eight players. Button disapears when eight players are added.
