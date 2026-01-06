@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+//import 'package:flutter/rendering.dart'; //Needed to enable debugPaintSizeEnabled
 import 'start.dart';
 import 'player.dart';
 
 void main() {
+  //debugPaintSizeEnabled = true; //Shows widget outlins and padding. Restart when turning on. Reloading alone does not work.
   runApp(const MainApp());
 }
 

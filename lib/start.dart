@@ -59,23 +59,25 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        spacing: 20,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
+      
+      body: Center(
+        child: Column(
+          spacing: 20,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             //Displays players
-            child: SingleChildScrollView(
+            SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20),
-                child: Wrap(
+                child: Wrap( //TODO can propably get rid of the scroll view. Come back and simplify later
                   alignment: WrapAlignment.center,
                   spacing: 20,
                   runSpacing: 20,
                   children: widget.players.map((player) {
                     return SizedBox(
                       width: 220,
-                      height: 48,
+                      height: 40,
                       child: ElevatedButton(
                         onPressed:() {},
                         child: Text(player.name),
@@ -85,47 +87,23 @@ class _StartPageState extends State<StartPage> {
                 ),
               ),
             ),
-            /*child: GridView.builder(
-              itemCount: widget.players.length,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 20,
-                crossAxisSpacing: 20,
-                childAspectRatio: 5,
+          
+            //Button to add up to eight players. Button disapears when eight players are added.
+            if (widget.players.length < 8)
+              ElevatedButton(
+                onPressed: _addPlayer,
+                child: const Text('New Player'),
               ),
-              itemBuilder: (context, index) {
-                final player = widget.players[index];
-                return Center(
-                  child: SizedBox(
-                    width: 300,
-                    height: 48,
-                    child: ElevatedButton(
-                      onPressed: () {}, //TODO Maybe allow for name editing in the future
-                      child: Text(player.name),
-                    ),
-                  )
-                );
-                
-                
-              },
-            ),*/
-          ),
-        
-          //Button to add up to eight players. Button disapears when eight players are added.
-          if (widget.players.length < 8)
-            ElevatedButton(
-              onPressed: _addPlayer,
-              child: const Text('New Player'),
-            ),
-          
-          //Button to start the game.
-          if (widget.players.length > 1)
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text('Start'),
-            ),
-          
-        ]
+
+            //Button to start the game. Appears after two players are added
+            if (widget.players.length > 1)
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Start'),
+              ),
+
+          ]
+        )
       )
     );
   }
