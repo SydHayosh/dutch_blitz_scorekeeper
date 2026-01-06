@@ -17,6 +17,21 @@ class ScorePage extends StatefulWidget {
 
 
 class _ScorePageState extends State<ScorePage> {
+  int round = 0;
+  bool roundOver = false;
+
+  void _roundEnd() {
+    setState(() {
+      roundOver = true;
+    });
+    //TODO updates round and switches points
+  }
+
+  void _calcScore() {
+    setState(() {
+      roundOver = false;
+    });
+  }
   /*void _addPlayer() {
     final TextEditingController _controller = TextEditingController();
 
@@ -66,42 +81,59 @@ class _ScorePageState extends State<ScorePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //Displays players
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Wrap( //TODO can propably get rid of the scroll view. Come back and simplify later
-                  alignment: WrapAlignment.center,
-                  spacing: 20,
-                  runSpacing: 20,
-                  children: widget.players.map((player) {
-                    return SizedBox(
-                      width: 220,
-                      height: 40,
-                      child: ElevatedButton(
-                        onPressed:() {},
-                        child: Text(player.name),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 20,
+              runSpacing: 20,
+              children: widget.players.map((player) {
+                return SizedBox(
+                  width: 220,
+                  height: 40,
+                  child: TextButton(
+                    onPressed:() {},
+                    child: Text(player.name),
+                  ),
+                );
+              }).toList(),
             ),
-          /*
-            //Button to add up to eight players. Button disapears when eight players are added.
-            if (widget.players.length < 8)
-              ElevatedButton(
-                onPressed: _addPlayer,
-                child: const Text('New Player'),
-              ),
 
-            //Button to start the game. Appears after two players are added
-            if (widget.players.length > 1)
-              ElevatedButton(
-                onPressed: () {},
-                child: const Text('Start'),
-              ),
-          */
+            /*
+            Buttons to navigate which cards are being scored.
+            Inbetween rounds only one button to end the round is avilable.
+            When points are ready to enter there are three buttons. Two
+            to switch between the blitz and dutch cards and one to start
+            the next round. SizedBox is used to maintain layout.
+            */
+            SizedBox(
+              //width: double.infinity,
+              height: 120,//TODO make dynamic
+              child: Column(
+                //spacing: 10,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  if (roundOver) ...[
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Blitz Cards'),
+                    ),
+                  
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text('Dutch Cards'),
+                    ),
 
+                    ElevatedButton(
+                      onPressed: _calcScore,
+                      child: const Text('Done'),
+                    )
+                  ] else
+                    ElevatedButton(
+                      onPressed: _roundEnd,
+                      child: const Text('Round Over'),
+                    )
+                ],
+              )
+            ),
           ]
         )
       )
