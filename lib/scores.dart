@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'player.dart';
 
+enum ScoreView {blitz, dutch, total}
+
 class ScorePage extends StatefulWidget {
   final List<Player> players;
   //final void Function(Player) onSave;
@@ -14,15 +16,15 @@ class ScorePage extends StatefulWidget {
   State<ScorePage> createState() => _ScorePageState();
 }
 
-
-
 class _ScorePageState extends State<ScorePage> {
   int round = 0;
   bool roundOver = false;
+  ScoreView _scoreView = ScoreView.total;
 
   void _roundEnd() {
     setState(() {
       roundOver = true;
+      _scoreView = ScoreView.blitz;
     });
     //TODO updates round and switches points
   }
@@ -30,45 +32,32 @@ class _ScorePageState extends State<ScorePage> {
   void _calcScore() {
     setState(() {
       roundOver = false;
+      _scoreView = ScoreView.total;
     });
   }
-  /*void _addPlayer() {
-    final TextEditingController _controller = TextEditingController();
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          //title: const Text('Add Player'),
-          content: TextField(
-            controller: _controller,
-            decoration: const InputDecoration(
-              labelText: 'Player name ',
-              //hintText: 'Player name',
-            ),
-          ),
+  void _blitzCards() {
+    setState(() {
+      _scoreView = ScoreView.blitz;
+    });
+  }
 
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
-            ),
+  void _dutchCards() {
+    setState(() {
+      _scoreView = ScoreView.dutch;
+    });
+  }
 
-            ElevatedButton(
-              onPressed: () {
-                final name = _controller.text.trim();
-                if (name.isNotEmpty) {
-                  widget.onSave(Player(name: name));
-                }
-                Navigator.pop(context);
-              },
-              child: const Text('Add')
-            ),
-          ]
-        );
-      },
-    );
-  }*/
+  int _getDisplayNumber(Player player) {
+    switch (_scoreView) {
+      case ScoreView.blitz:
+        return player.blitzPile;
+      case ScoreView.dutch:
+        return player.dutchPile;
+      case ScoreView.total:
+        return player.totalScore;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +80,7 @@ class _ScorePageState extends State<ScorePage> {
                   height: 40,
                   child: TextButton(
                     onPressed:() {},
-                    child: Text(player.name),
+                    child: Text('${player.name}: ${_getDisplayNumber(player)}'),
                   ),
                 );
               }).toList(),
@@ -113,12 +102,12 @@ class _ScorePageState extends State<ScorePage> {
                 children: [
                   if (roundOver) ...[
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _blitzCards,
                       child: const Text('Blitz Cards'),
                     ),
                   
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: _dutchCards,
                       child: const Text('Dutch Cards'),
                     ),
 

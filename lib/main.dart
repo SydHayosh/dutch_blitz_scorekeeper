@@ -45,12 +45,13 @@ class _MainScaffoldState extends State<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     final pages = [
-      //starting screen where the user adds players
+      //Starting screen where the user adds players.
       StartPage(
         players: _players,
         onSave: _newPlayer,
         select: _select,
       ),
+      //In game screen where points are scored and displayed.
       ScorePage(
         players: _players
       ),
