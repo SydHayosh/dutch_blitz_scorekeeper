@@ -1,3 +1,4 @@
+import 'package:dutch_blitz/scores.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/rendering.dart'; //Needed to enable debugPaintSizeEnabled
 import 'start.dart';
@@ -48,6 +49,10 @@ class _MainScaffoldState extends State<MainScaffold> {
       StartPage(
         players: _players,
         onSave: _newPlayer,
+        select: _select,
+      ),
+      ScorePage(
+        players: _players
       ),
     ];
     return Scaffold(

@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
 import 'player.dart';
 
-class StartPage extends StatefulWidget {
+class ScorePage extends StatefulWidget {
   final List<Player> players;
-  final void Function(Player) onSave;
-  final void Function(int) select;
+  //final void Function(Player) onSave;
 
-  const StartPage({
+  const ScorePage({
     super.key,
     required this.players,
-    required this.onSave,
-    required this.select,
   });
 
   @override
-  State<StartPage> createState() => _StartPageState();
+  State<ScorePage> createState() => _ScorePageState();
 }
 
 
 
-class _StartPageState extends State<StartPage> {
-  void _addPlayer() {
+class _ScorePageState extends State<ScorePage> {
+  /*void _addPlayer() {
     final TextEditingController _controller = TextEditingController();
 
     showDialog(
@@ -56,7 +53,7 @@ class _StartPageState extends State<StartPage> {
         );
       },
     );
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +86,7 @@ class _StartPageState extends State<StartPage> {
                 ),
               ),
             ),
-          
+          /*
             //Button to add up to eight players. Button disapears when eight players are added.
             if (widget.players.length < 8)
               ElevatedButton(
@@ -100,11 +97,10 @@ class _StartPageState extends State<StartPage> {
             //Button to start the game. Appears after two players are added
             if (widget.players.length > 1)
               ElevatedButton(
-                onPressed: () {
-                  widget.select(1);
-                },
+                onPressed: () {},
                 child: const Text('Start'),
               ),
+          */
 
           ]
         )
