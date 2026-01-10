@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'player.dart';
 
 enum ScoreView {blitz, dutch, total}
 
 class ScorePage extends StatefulWidget {
   final List<Player> players;
-  //final void Function(Player) onSave;
 
   const ScorePage({
     super.key,
@@ -59,10 +59,78 @@ class _ScorePageState extends State<ScorePage> {
     }
   }
 
+  String _getDisplayKind() {
+    switch (_scoreView) {
+      case ScoreView.blitz:
+        return 'Cards in blitz pile';
+      case ScoreView.dutch:
+        return 'Cards in dutch pile';
+      case ScoreView.total:
+        return 'Score';
+    }
+  }
+
+  void _updateScore(Player player, int cards) {
+    setState(() {
+      switch (_scoreView) {
+        case ScoreView.blitz:
+          player.blitzPile = cards;
+          break;
+        case ScoreView.dutch:
+          player.dutchPile = cards;
+          break;
+        default:
+          break;
+      }
+    });
+  }
+
+  void _getScore(Player player) {
+    
+    final TextEditingController _controller = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          //title: const Text('Add Player'),
+          content: TextField(
+            controller: _controller,
+            //inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              labelText: _getDisplayKind(),
+              //hintText: 'Player name',
+            ),
+          ),
+
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
+            ),
+
+            ElevatedButton(
+              onPressed: () {
+                final cards = int.tryParse(_controller.text.trim());
+                if (cards != null) {
+                  _updateScore(player, cards);
+                }
+                Navigator.pop(context);
+              },
+              child: const Text('Add')
+            ),
+          ]
+        );
+      },
+    );
+  }
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Center(
         child: Column(
           spacing: 20,
@@ -79,7 +147,7 @@ class _ScorePageState extends State<ScorePage> {
                   width: 220,
                   height: 40,
                   child: TextButton(
-                    onPressed:() {},
+                    onPressed: () => _getScore(player),
                     child: Text('${player.name}: ${_getDisplayNumber(player)}'),
                   ),
                 );
