@@ -1,7 +1,8 @@
-import 'package:dutch_blitz/scores.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter/rendering.dart'; //Needed to enable debugPaintSizeEnabled
 import 'start.dart';
+import 'scores.dart';
+import 'cards.dart';
 import 'player.dart';
 
 void main() {
@@ -30,6 +31,7 @@ class MainScaffold extends StatefulWidget {
 
 class _MainScaffoldState extends State<MainScaffold> {
   int _index = 0;
+  int _round = 0;
   //List<Widget> pages = [StartPage(onSave: _newPlayer,)];
   
   final List<Player> _players = [];
@@ -53,7 +55,13 @@ class _MainScaffoldState extends State<MainScaffold> {
       ),
       //In game screen where points are scored and displayed.
       ScorePage(
-        players: _players
+        players: _players,
+        select: _select,
+      ),
+
+      CardsPage(
+        players: _players,
+        select: _select,
       ),
     ];
     return Scaffold(

@@ -21,7 +21,7 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   void _addPlayer() {
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
 
     showDialog(
       context: context,
@@ -29,7 +29,7 @@ class _StartPageState extends State<StartPage> {
         return AlertDialog(
           //title: const Text('Add Player'),
           content: TextField(
-            controller: _controller,
+            controller: controller,
             decoration: const InputDecoration(
               labelText: 'Player name ',
               //hintText: 'Player name',
@@ -44,7 +44,7 @@ class _StartPageState extends State<StartPage> {
 
             ElevatedButton(
               onPressed: () {
-                final name = _controller.text.trim();
+                final name = controller.text.trim();
                 if (name.isNotEmpty) {
                   widget.onSave(Player(name: name));
                 }
