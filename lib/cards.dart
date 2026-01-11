@@ -23,9 +23,14 @@ class _CardsPageState extends State<CardsPage> {
   CardType _cardType = CardType.blitz;
 
   void _calcScore() {
+    for(final player in widget.players){
+      player.totalScore += player.dutchPile - (2 * player.blitzPile);
+      player.dutchPile = 0;
+      player.blitzPile = 0;
+    }
+
+    _cardType = CardType.blitz;
     widget.select(1);
-    setState(() {
-    });
   }
 
   //Function changes state to accept blitz points
